@@ -1,9 +1,8 @@
 package com.cw.generator.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -11,11 +10,40 @@ import java.util.zip.ZipOutputStream;
 /**
  * @Author weiChengCheng
  * @Date 2020-05-24 13:33
- * @Description todo
+ * @Description zip工具
  */
+@Slf4j
 public class ZipUtils {
 
     private static final int BUFFER_SIZE = 2 * 1024;
+
+
+    /**
+     * 压缩zip
+     *
+     * @param sourceDir
+     * @param path
+     * @param KeepDirStructure
+     * @return
+     */
+    public static File toZip(String sourceDir, String path, boolean KeepDirStructure) {
+        try {
+            FileUtil.createFile(path);
+
+            File file = new File(path);
+            OutputStream outputStream = new FileOutputStream(file);
+
+            toZip(sourceDir, outputStream, KeepDirStructure);
+
+            outputStream.close();
+
+            return file;
+        } catch (Exception e) {
+            log.error("生成压缩文件异常", e);
+            return null;
+        }
+    }
+
 
     /**
      * 压缩成ZIP 方法1
@@ -36,7 +64,7 @@ public class ZipUtils {
             compress(sourceFile, zos, sourceFile.getName(), KeepDirStructure);
             long end = System.currentTimeMillis();
         } catch (Exception e) {
-            throw new RuntimeException("zip error from ZipUtils", e);
+            log.error("zip error from ZipUtils", e);
         } finally {
             if (zos != null) {
                 try {
@@ -73,7 +101,7 @@ public class ZipUtils {
             }
             long end = System.currentTimeMillis();
         } catch (Exception e) {
-            throw new RuntimeException("zip error from ZipUtils", e);
+            log.error("zip error from ZipUtils", e);
         } finally {
             if (zos != null) {
                 try {

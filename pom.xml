@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <swagger-version>2.8.0</swagger-version>
     </properties>
 
     <dependencies>
@@ -72,6 +73,32 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.68</version>
+        </dependency>
+
+        <!-- swagger start -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger-version}</version>
+        </dependency>
+        <!-- swagger end -->
+
+
+        <dependency>
+            <groupId>com.cw</groupId>
+            <artifactId>frame-starter-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.11</version>
         </dependency>
 
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${daoPackage}.${tableAllCamelCaseName}Dao">
+
+    <resultMap id="BaseResultMap" type="${entityPackage}.${tableAllCamelCaseName}Bo">
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,
+        username,
+        addtime
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="${entityPackage}.${tableAllCamelCaseName}Bo">
+        
+    </insert>
+    
+    <insert id="batchInsert" parameterType="list">
+
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+
+    </delete>
+
+    <delete id="batchDeleteByIdList" parameterType="list">
+
+    </delete>
+
+    <delete id="batchDeleteByIdArray" parameterType="arraylist">
+
+    </delete>
+
+    <update id="updateById" parameterType="${entityPackage}.${tableAllCamelCaseName}Bo">
+
+    </update>
+
+    <update id="batchUpdateById" parameterType="list">
+        
+    </update>
+    
+    <update id="insertOrUpdate" parameterType="${entityPackage}.${tableAllCamelCaseName}Bo">
+
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    </select>
+
+    <select id="listByIdList" parameterType="list" resultMap="BaseResultMap">
+
+    </select>
+
+    <select id="listByIdArray" parameterType="arraylist" resultMap="BaseResultMap">
+
+    </select>
+
+    <select id="getByBo" parameterType="${entityPackage}.${tableAllCamelCaseName}Bo" resultMap="BaseResultMap">
+
+    </select>
+
+    <select id="listByBo" parameterType="${entityPackage}.${tableAllCamelCaseName}Bo" resultMap="BaseResultMap">
+
+    </select>
+
+</mapper>

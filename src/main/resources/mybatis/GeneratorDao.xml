@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cw.generator.dao.GeneratorDao">
+
+    <select id="countTable" resultType="java.lang.Integer">
+        select count(1) from information_schema.TABLES
+        <where>
+            <if test="null != dbName and '' != dbName">
+                and TABLE_SCHEMA = #{dbName}
+            </if>
+            <if test="null != tableName and '' != tableName">
+                and TABLE_NAME like concat('%',#{tableName},'%')
+            </if>
+            <if test="null != comment and '' != comment">
+                and TABLE_COMMENT like concat('%',#{comment},'%')
+            </if>
+        </where>
+    </select>
+    
+    
+    <select id="getTables" resultType="com.cw.generator.entity.TableEntity">
+        select
+        `TABLE_SCHEMA` as dbName,
+        `TABLE_NAME` as tableSourceName,
+        `ENGINE` as engin,
+        `TABLE_ROWS` as dataCount,
+        `CREATE_TIME` as createTime,
+        `TABLE_COMMENT` as comment
+        from information_schema.TABLES
+        <where>
+            <if test="null != dbName and '' != dbName">
+                and TABLE_SCHEMA = #{dbName}
+            </if>
+            <if test="null != tableName and '' != tableName">
+                and TABLE_NAME like concat('%',#{tableName},'%')
+            </if>
+            <if test="null != comment and '' != comment">
+                and TABLE_COMMENT like concat('%',#{comment},'%')
+            </if>
+        </where>
+        order by `TABLE_NAME` asc
+        <if test="null != start and null != size">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+
+    <select id="getColumnsByTable" resultType="com.cw.generator.entity.ColumnEntity">
+        select
+        COLUMN_NAME as columnSourceName,
+        DATA_TYPE as dataType,
+        COLUMN_COMMENT as comment
+        from information_schema.COLUMNS
+        where TABLE_SCHEMA = #{dbName} and TABLE_NAME = #{tableSourceName}
+    </select>
+
+    <select id="getTableByDbAndName" resultType="com.cw.generator.entity.TableEntity">
+        select
+            `TABLE_SCHEMA` as dbName,
+            `TABLE_NAME` as tableSourceName,
+            `ENGINE` as engin,
+            `TABLE_ROWS` as dataCount,
+            `CREATE_TIME` as createTime,
+            `TABLE_COMMENT` as comment
+        from information_schema.TABLES
+        where TABLE_SCHEMA = #{dbName} and TABLE_NAME in (
+            <foreach collection="tableNames" separator="," item="tableName">
+                #{tableName}
+            </foreach>
+            )
+    </select>
+
+</mapper>
